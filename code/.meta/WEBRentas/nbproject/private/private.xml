@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/F:/daniel/proyectos/WEBRentas/code/js/rentas.js</file>
             <file>file:/F:/daniel/proyectos/WEBRentas/code/actions/catalogos.php</file>
             <file>file:/F:/daniel/proyectos/WEBRentas/code/actions/actualizaInmueble.php</file>
@@ -11,6 +12,15 @@
             <file>file:/F:/daniel/proyectos/WEBRentas/code/db/Conexion.php</file>
             <file>file:/F:/daniel/proyectos/WEBRentas/code/actions/registraInmueble.php</file>
             <file>file:/F:/daniel/proyectos/WEBRentas/code/actions/buscaInmueble.php</file>
+=======
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/actions/catalogos.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/menuPrincipal.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/pages/inmuebles.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/pages/clientes.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/actions/registraInmueble.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/actions/registraCliente.php</file>
+            <file>file:/C:/Users/danie_000/Documents/Proyectos/WEBRentas/code/js/rentas.js</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>

@@ -16,6 +16,7 @@ var rentas;
    var idprop = 0;
    var tiposRentas = "-";
    var estatusInmuebles = "-";
+   var listaSexos="-";
    
    /**
     * Controller para setear la info del usuario
@@ -47,6 +48,21 @@ var rentas;
             var deferred = $q.defer();
             $http.get("actions/catalogos.php?idcatalogo=2").
                     success(function(data, status, headers, config){
+                        deferred.resolve(eval('('+JSON.stringify(data)+')'));
+            }).error(function(data, status, headers, config){
+                deferred.reject(status);
+            });
+            return deferred.promise;
+        };
+        return {get: get};
+    });
+    
+    rentas.factory('ListaSexos', function($q, $http){
+        var get = function(search){
+            var deferred = $q.defer();
+            $http.get("actions/catalogos.php?idcatalogo=3").
+                    success(function(data, status, headers, config){
+                        alert(JSON.stringify(data));
                         deferred.resolve(eval('('+JSON.stringify(data)+')'));
             }).error(function(data, status, headers, config){
                 deferred.reject(status);
@@ -305,6 +321,71 @@ var rentas;
             });
         };
         
+    });
+    
+    rentas.controller('ClientesController', function($scope, $http, $location, ListaSexos){
+        $scope.nuevo = {
+            nombre : ''
+            ,apellidos:''
+            ,fechanac : ''
+            ,idsexo:0
+            ,idstatus:0
+            ,idusrreg : $scope.idusr
+            ,idpropietario : $scope.idprop
+        };
+        
+        $scope.listaSexos = [];
+             
+        
+        $scope.$watch('search', function(newValue, oldValue){
+            var promesa;
+            if(listaSexos !== "-"){
+                $scope.listaSexos = listaSexos;
+            }else{
+                promesa = ListaSexos.get(newValue);
+                promesa.then(function(value){
+                    $scope.listaSexos = value.datos;
+                    listaSexos = value.datos;
+                }, function(reason){
+                    $scope.error = reason;
+                });
+            }
+        });
+        
+        $scope.nuevoCliente = function(){
+            $http({
+                method: 'GET'
+                ,url :'actions/registraCliente.php?params='+btoa(
+                    $scope.nuevo.nombre+'|'+
+                    $scope.nuevo.apellidos+'|'+
+                    $scope.nuevo.fechanac+'|'+
+                    $scope.nuevo.idsexo+'|'+
+                    $scope.nuevo.idstatus+'|'+
+                    $scope.nuevo.idusrreg+'|'+
+                    $scope.nuevo.idpropietario
+                )
+            }).success(function(data, status, headers, config){
+                try{
+                    var salida = JSON.stringify(data);
+                    var resp = "";
+                    try{
+                        resp = eval('('+salida+')');
+                        alert(resp.msg);
+                        $scope.buscaInmuebles();
+                    }catch(ex){
+                        alert("Excepcion del eval: " + ex);
+                    }
+                }catch(ex){
+                    alert("Excepcion en el success: " + ex);
+                }
+            }).error(function(data, status, headers, config){
+                try{
+                    console.log("en el error");
+                }catch(ex){
+                    alert("Excepcion en el error: " + ex);
+                }
+            });
+        };
     });
 })();
 
