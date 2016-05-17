@@ -1,6 +1,6 @@
 /*
 SQLyog Enterprise - MySQL GUI v8.05 
-MySQL - 5.6.26 : Database - dwrentas
+MySQL - 5.5.5-10.1.9-MariaDB : Database - dwrentas
 *********************************************************************
 */
 
@@ -10,6 +10,8 @@ MySQL - 5.6.26 : Database - dwrentas
 
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`dwrentas` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `dwrentas`;
 
@@ -149,6 +151,8 @@ CREATE TABLE `tclientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tclientes` */
+
+insert  into `tclientes`(`idcliente`,`nombre`,`apellidos`,`fechanac`,`idsexo`,`idstatus`,`fechaalta`,`fechareg`,`fechamod`,`idusrreg`,`idusrmod`,`idpropietario`) values (1,'patricia','rodriguez camarena','0000-00-00',1,1,'2016-05-03','2016-05-03 23:56:11','0000-00-00 00:00:00',1,0,1);
 
 /*Table structure for table `tclientesaval` */
 

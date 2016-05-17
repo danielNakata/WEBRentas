@@ -21,6 +21,9 @@
         case 3:
             $sql = "select idsexo as idsexo, sexo as sexo from ".$conexion->name.".tcatsexo order by idsexo asc";
             break;
+        case 4:
+            $sql = "select idtipocontacto as idtipocontacto, descripcion as tipocontacto from ".$conexion->name.".tcattipocontacto where idstatus = 1 order by idtipocontacto ";
+            break;
         default:
             $sql = "select 0 as id, 'CATALOGO NO SELECCIONADO ".$idcatalogo."' as msg ";
             break;

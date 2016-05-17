@@ -34,9 +34,9 @@ include("../db/Conexion.php");
                 $existe = $existe + 1;
                 
                 $sql = "insert into ".$conexion->name.".tclientes(idcliente, nombre, apellidos, fechanac, idsexo, idstatus, "
-                        . " fechaalta, fechareg, idusrreg, idpropietario) values ( "
+                        . " fechaalta, fechareg, idusrreg, idpropietario, idstatus) values ( "
                         . " ".$existe.", '".$nombre."', '".$apellidos."', '".$fechanac."', ".$idsexo.", ".$idstatus.", "
-                        . " today(),current_timestamp, ".$idusrreg.", ".$idpropietario.")  ";
+                        . " now(),current_timestamp, ".$idusrreg.", ".$idpropietario.", 1)  ";
                 if($resultado3 = $con->query($sql)){
                     if($con->affected_rows > 0){
                         $json = "{\"res\":\"1\", \"msg\":\"CLIENTE REGISTRADO CORRECTAMENTE\", \"idcliente\":\"".$existe."\" }";

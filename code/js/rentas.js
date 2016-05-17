@@ -17,6 +17,7 @@ var rentas;
    var tiposRentas = "-";
    var estatusInmuebles = "-";
    var listaSexos="-";
+   var listaTipoContactos="-";
    
    /**
     * Controller para setear la info del usuario
@@ -62,7 +63,20 @@ var rentas;
             var deferred = $q.defer();
             $http.get("actions/catalogos.php?idcatalogo=3").
                     success(function(data, status, headers, config){
-                        alert(JSON.stringify(data));
+                        deferred.resolve(eval('('+JSON.stringify(data)+')'));
+            }).error(function(data, status, headers, config){
+                deferred.reject(status);
+            });
+            return deferred.promise;
+        };
+        return {get: get};
+    });
+    
+    rentas.factory('ListaTipoContactos', function($q, $http){
+        var get = function(search){
+            var deferred = $q.defer();
+            $http.get("actions/catalogos.php?idcatalogo=4").
+                    success(function(data, status, headers, config){
                         deferred.resolve(eval('('+JSON.stringify(data)+')'));
             }).error(function(data, status, headers, config){
                 deferred.reject(status);
@@ -172,7 +186,6 @@ var rentas;
             }else{
                 promesaListaEstatusInmuebles = ListaEstatusInmuebles.get(newValue);
                 promesaListaEstatusInmuebles.then(function(value){
-                    console.log(JSON.stringify(value));
                     $scope.listaEstatusInmuebles = value.datos;
                     estatusInmuebles = value.datos;
                 },function(reason){
@@ -323,7 +336,12 @@ var rentas;
         
     });
     
-    rentas.controller('ClientesController', function($scope, $http, $location, ListaSexos){
+    rentas.controller('ClientesController', function($scope, $http, $location, ListaSexos, ListaTipoContactos){
+        $scope.consulta = {
+            filtro:''
+            ,idpropietario : $scope.idprop
+        };
+        
         $scope.nuevo = {
             nombre : ''
             ,apellidos:''
@@ -332,30 +350,88 @@ var rentas;
             ,idstatus:0
             ,idusrreg : $scope.idusr
             ,idpropietario : $scope.idprop
+            ,listaNuevoContactos : []
         };
         
-        $scope.listaSexos = [];
-             
+        $scope.listaNuevoContactos = [{id:'tipoContacto1', idtipocontacto:1, clavecontacto:'-'}
+        ];
         
+        $scope.listaSexos2 = [];
+        
+        $scope.listaTipoContactos = [];
+        
+        $scope.listaClientes = [];
+        
+        $scope.agregaContacto = function(){
+            var nuevo = $scope.listaNuevoContactos.length + 1;
+            console.log(nuevo);
+            $scope.listaNuevoContactos.push({id: 'tipoContacto'+nuevo,idtipocontacto:1, clavecontacto:'-'});
+            console.log(JSON.stringify($scope.listaNuevoContactos));
+        };
+        
+        $scope.quitaContacto = function(idtipocontacto){
+            console.log(idtipocontacto);
+        };
+                     
         $scope.$watch('search', function(newValue, oldValue){
             var promesa;
+            var promesa2;
             if(listaSexos !== "-"){
-                $scope.listaSexos = listaSexos;
+                $scope.listaSexos2 = listaSexos;
             }else{
                 promesa = ListaSexos.get(newValue);
                 promesa.then(function(value){
-                    $scope.listaSexos = value.datos;
+                    $scope.listaSexos2 = value.datos;
                     listaSexos = value.datos;
+                }, function(reason){
+                    $scope.error = reason;
+                });
+            }
+            
+            if(listaTipoContactos !== "-"){
+                $scope.listaTipoContactos = listaTipoContactos;
+            }else{
+                promesa2 = ListaTipoContactos.get(newValue);
+                promesa2.then(function(value){
+                    $scope.listaTipoContactos = value.datos;
+                    listaTipoContactos = value.datos;
                 }, function(reason){
                     $scope.error = reason;
                 });
             }
         });
         
-        $scope.nuevoCliente = function(){
+        $scope.buscaCliente = function(){
             $http({
                 method: 'GET'
-                ,url :'actions/registraCliente.php?params='+btoa(
+                ,url: 'actions/buscaCliente.php?param='+btoa(
+                    $scope.consulta.filtro+'|'+
+                    $scope.consulta.idpropietario
+                )
+            }).success(function(data, status, headers, config){
+                var salida = JSON.stringify(data);
+                var resp = "";
+                try{
+                    resp = eval('('+salida+')');
+                    $scope.listaClientes = resp.datos;
+                }catch(ex){
+                    alert("Excepcion del eval: " + ex);
+                }
+            }).error(function(data, status, headers, config){
+                try{
+                    console.log("en el error");
+                }catch(ex){
+                    alert("Excepcion en el error: " + ex);
+                }
+            });
+        };
+        
+        $scope.nuevoCliente = function(){
+            $scope.nuevo.listaNuevoContactos = $scope.listaNuevoContactos;
+            console.log(JSON.stringify($scope.nuevo));
+            /*$http({
+                method: 'GET'
+                ,url :'actions/registraCliente.php?param='+btoa(
                     $scope.nuevo.nombre+'|'+
                     $scope.nuevo.apellidos+'|'+
                     $scope.nuevo.fechanac+'|'+
@@ -371,7 +447,6 @@ var rentas;
                     try{
                         resp = eval('('+salida+')');
                         alert(resp.msg);
-                        $scope.buscaInmuebles();
                     }catch(ex){
                         alert("Excepcion del eval: " + ex);
                     }
@@ -384,9 +459,10 @@ var rentas;
                 }catch(ex){
                     alert("Excepcion en el error: " + ex);
                 }
-            });
+            });*/
         };
     });
+    
 })();
 
 

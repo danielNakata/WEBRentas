@@ -4,10 +4,23 @@
  * and open the template in the editor.
  */
 
+var divs = [
+    'inmueblesDiv'
+    ,'clientesDiv'
+];
+
 
 function muestraDiv(divid){
-    document.getElementById(divid).style.visibility = "visible";
-    document.getElementById(divid).style.heigth = "auto";
+    for(var i=0; i<divs.length; i++){
+        if(divid === divs[i]){
+            document.getElementById(divid).style.visibility = "visible";
+            document.getElementById(divid).style.heigth = "auto";
+        }else{
+            document.getElementById(divs[i]).style.visibility = "hidden";
+            document.getElementById(divs[i]).style.heigth = "0px";
+        }
+    }
+    
 }
 
 

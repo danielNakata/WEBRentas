@@ -8,7 +8,7 @@
     <h1 class="h1">Inmuebles</h1>
     <div id="listaInmueble" class="panel panel-default">
         <div class="panel-heading">
-            <a href="#" data-toggle="collapse" data-target="#cuerpoDiv"><h4>Lista Inmueble</h4></a>
+            <a href="#" data-toggle="collapse" data-target="#cuerpoDiv"><h4>Lista Inmuebles</h4></a>
         </div>
         <div class="panel-body" ng-init="buscaInmuebles()" >
             <label for="filtro"></label>

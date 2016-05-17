@@ -69,15 +69,15 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li class="active"><a href="#">Inicio<span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Inmuebles</a></li>
-                        <li><a href="#">Clientes</a></li>
+                        <li><a href="#" onclick="muestraDiv('inmueblesDiv')">Inmuebles</a></li>
+                        <li><a href="#" onclick="muestraDiv('clientesDiv')">Clientes</a></li>
                         <li><a href="#">Pagos</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <div id="inmueblesDiv" class="container" ng-include="'pages/inmuebles.php'" >
+                    <div id="inmueblesDiv" class="container" style="visibility: hidden; height: 0px;" ng-include="'pages/inmuebles.php'" >
                     </div>
-                    <div id="clientesDiv" class="container" ng-include="'pages/clientes.php'" >
+                    <div id="clientesDiv" class="container" style="visibility: hidden; height: 0px;" ng-include="'pages/clientes.php'" >
                     </div>
                 </div>
             </div>
